@@ -60,6 +60,8 @@ end
 
 function newFinderWindow()
   -- Finder is always running, so we don't have to worry about launching it
+  local app = hs.application.get("Finder")
+  app:activate()
   tell("Finder", "make new Finder window")
 end
 
