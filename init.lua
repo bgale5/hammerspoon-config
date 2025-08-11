@@ -10,6 +10,11 @@ superKey = {"cmd", "ctrl"}
 superKey2 = {"cmd", "ctrl", "shift"}
 
 -- Caffeine behaviour
+
+-- systemIdle: screen idles, system doesn't sleep
+-- displayIdle: screen doesn't idle
+caffeineSleepLevel = "systemIdle"
+
 caffeine = hs.menubar.new()
 function setCaffieneDisplay(state)
   if state then
@@ -20,15 +25,15 @@ function setCaffieneDisplay(state)
 end
 
 function caffeineClicked()
-  local newState = not hs.caffeinate.get("systemIdle")
+  local newState = not hs.caffeinate.get(caffeineSleepLevel)
   -- Use set instead of toggle so that we get access to acAndBattery flag
-  hs.caffeinate.set("systemIdle", newState, true)
+  hs.caffeinate.set(caffeineSleepLevel, newState, true)
   setCaffieneDisplay(newState)
 end
 
 if caffeine then
   caffeine:setClickCallback(caffeineClicked)
-  setCaffieneDisplay(hs.caffeinate.get("systemIdle"))
+  setCaffieneDisplay(hs.caffeinate.get(caffeineSleepLevel))
 end
 
 function tell(applicationName, cmd)
